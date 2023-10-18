@@ -1,0 +1,7 @@
+num = 8
+
+bin(num)[2:]
+
+x = signed(num)
+
+print(num)
