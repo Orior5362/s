@@ -1,2 +1,40 @@
-# s
- עבודה ראשונה תכנות
+import os
+
+def list_files_and_directories(path):
+    for root, dirs, files in os.walk(path):
+        print(f"Current directory: {root}")
+        
+        # Print all files in the current directory
+        for file in files:
+            print(f"  File: {file}")
+
+        # Print all subdirectories in the current directory
+        for directory in dirs:
+            print(f"  Subdirectory: {directory}")
+
+directory_path = 'C:\'
+list_files_and_directories(directory_path)
+
+import requests
+
+def check_file_malicious(file_path, api_key):
+    url = 'https://www.virustotal.com/vtapi/v2/file/report'
+    params = {'apikey': api_key, 'resource': file_path}
+    response = requests.get(url, params=params)
+    
+    if response.status_code == 200:
+        result = response.json()
+        if result['response_code'] == 1:
+            if result['positives'] > 0:
+                print(f"The file {file_path} is malicious.")
+            else:
+                print(f"The file {file_path} is not malicious.")
+        else:
+            print(f"Scan not finished for {file_path}.")
+    else:
+        print(f"Error checking file {file_path}. Status code: {response.status_code}")
+
+api_key = '9ebd71b6abbf21671204f2c7c3ca6161d892a8fa335efcd777dabd9f9e277210'
+file_path = '/path/to/your/file.txt'
+
+check_file_malicious(file_path, api_key)
