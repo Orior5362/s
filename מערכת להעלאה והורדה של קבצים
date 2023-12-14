@@ -1,0 +1,31 @@
+with open('local_file.txt', 'rb') as file:
+    files = {'file': file}
+
+import requests
+
+url = 'https://example.com/upload'
+response = requests.post(url, files=files)
+
+import requests
+
+url = 'https://example.com/download/file.txt'
+response = requests.get(url)
+
+with open('local_file.txt', 'wb') as file:
+    file.write(response.content)
+
+from ftplib import FTP
+
+ftp = FTP('ftp.example.com')
+ftp.login(user='username', passwd='password')
+
+
+with open('local_file.txt', 'rb') as file:
+    ftp.storbinary('STOR remote_file.txt', file)
+
+
+with open('local_file.txt', 'wb') as file:
+    ftp.retrbinary('RETR remote_file.txt', file.write)
+
+
+ftp.quit()
